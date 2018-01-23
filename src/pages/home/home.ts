@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MediaCapture, MediaFile, CaptureError, CaptureVideoOptions } from '@ionic-native/media-capture';
+import { Storage } from '@ionic/storage';
+import { Media, MediaObject } from '@ionic-native/media';
+import { File } from '@ionic-native/file';
 
 @Component({
   selector: 'page-home',
@@ -9,7 +12,10 @@ import { MediaCapture, MediaFile, CaptureError, CaptureVideoOptions } from '@ion
 export class HomePage {
 
   video;
-  constructor(public navCtrl: NavController, private mediaCapture: MediaCapture) {
+
+  @ViewChild('myvideo') myVideo: any;
+  //https://ionicacademy.com/capture-audio-video-local/
+  constructor(public navCtrl: NavController, private mediaCapture: MediaCapture, private storage: Storage, private file: File, private media: Media) {
       let options: CaptureVideoOptions = { limit: 1, duration:180, };
       this.mediaCapture.captureVideo(options)
       .then(
@@ -25,7 +31,11 @@ export class HomePage {
         }
       );
   }
-
+  ionViewDidLoad() {
+    this.storage.get(MEDIA_FILES_KEY).then(res => {
+      this.mediaFiles = JSON.parse(res) || [];
+    })
+  }
   videoCapture() {
       console.log("Video Capture");
       let options: CaptureVideoOptions = { limit: 1, duration:180, };
