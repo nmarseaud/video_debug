@@ -7,8 +7,17 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  This a test of Media Capture a cordova plugin. This plugin provides access to the device's audio, image, and video capture capabilities.
+  Here is the <a href="https://github.com/apache/cordova-plugin-media-capture">git repo</a>
+  <video  #myvideo id="myvideo"
+            class="superfill"
+            autobuffer
+            *ngIf="video"
+            src="{{video.url}}"
+            controls
+            playsinline
+            autoplay
+            webkit-playsinline>
+    </video>
+    <p (tap)="videoCapture()">Click here to capture a video</p>
 </ion-content>
